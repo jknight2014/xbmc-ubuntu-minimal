@@ -4,3 +4,10 @@ Action=org.freedesktop.upower.*;org.freedesktop.consolekit.system.*;org.freedesk
 ResultAny=yes
 ResultInactive=yes
 ResultActive=yes
+
+[Untrusted Upgrade]
+Identity=unix-user:xbmc
+Action=org.debian.apt.upgrade-packages;org.debian.apt.update-cache
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes
