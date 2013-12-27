@@ -404,22 +404,6 @@ function installXbmc()
     IS_INSTALLED=$(aptInstall xbmc)
 }
 
-function enableDirtyRegionRendering()
-{
-    showInfo "Enabling XBMC dirty region rendering..."
-	createDirectory "$TEMP_DIRECTORY" 1 0
-	handleFileBackup $XBMC_ADVANCEDSETTINGS_FILE 0 1
-	download $DOWNLOAD_URL"dirty_region_rendering.xml"
-	createDirectory "$XBMC_USERDATA_DIR" 0 0
-	IS_MOVED=$(move $TEMP_DIRECTORY"dirty_region_rendering.xml" "$XBMC_ADVANCEDSETTINGS_FILE")
-
-	if [ "$IS_MOVED" == "1" ]; then
-        showInfo "XBMC dirty region rendering enabled"
-    else
-        showError "XBMC dirty region rendering could not be enabled"
-    fi
-}
-
 function installXbmcAddonRepositoriesInstaller()
 {
     showInfo "Installing Addon Repositories Installer addon..."
@@ -768,10 +752,9 @@ function selectXbmcTweaks()
         --checklist "Plese select to install or apply:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Enable dirty region rendering (improved performance)" on
-            2 "Enable temperature monitoring (confirm with ENTER)" on
-            3 "Install Addon Repositories Installer addon" on
-            4 "Apply improved Pulse-Eight Motorola NYXboard keymap" off)
+   options=(1 "Enable temperature monitoring (confirm with ENTER)" on
+            2 "Install Addon Repositories Installer addon" off
+            3 "Apply improved Pulse-Eight Motorola NYXboard keymap" off)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -779,15 +762,12 @@ function selectXbmcTweaks()
     do
         case ${choice//\"/} in
             1)
-                enableDirtyRegionRendering
-                ;;
-            2)
                 installLmSensors
                 ;;
-            3)
+            2)
                 installXbmcAddonRepositoriesInstaller 
                 ;;
-            4)
+            3)
                 installNyxBoardKeymap 
                 ;;
         esac
