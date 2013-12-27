@@ -11,6 +11,10 @@ stop on runlevel [016]
 
 # tell upstart to respawn the process if abnormal exit
 respawn
+respawn limit 10 5
+
+# nice level
+limit nice 21 21
 
 script
   exec su -c "xinit /usr/bin/xbmc --standalone :0" $USER
