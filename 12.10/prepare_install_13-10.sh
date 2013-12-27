@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# @author   Bram van Oploo
-# @author2  Matt Filetto
+# @original author   Bram van Oploo
+# @author  Matt Filetto
 # @date     2013-12-27
 # @version  2.7
 #
@@ -45,7 +45,7 @@ OSCAM_PPA="ppa:oscam/ppa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.10 by Bram van Oploo :: bram@sudo-systems.com :: www.sudo-systems.com"
+SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.04 > 13.10 by Matt Filetto :: matt.filetto@gmail.com :: www.sudo-systems.com"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
