@@ -873,10 +873,6 @@ function cleanUp()
 	if [ -e "$TEMP_DIRECTORY" ]; then
 	    sudo rm -R "$TEMP_DIRECTORY" > /dev/null 2>&1
 	fi
-	
-	if [ -e "$HOME_DIRECTORY$THIS_FILE" ]; then
-	    rm "$HOME_DIRECTORY$THIS_FILE" > /dev/null 2>&1
-	fi
 }
 
 function rebootMachine()
