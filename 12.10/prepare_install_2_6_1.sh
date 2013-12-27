@@ -320,6 +320,7 @@ function installPowerManagement()
     IS_INSTALLED=$(aptInstall upower)
     IS_INSTALLED=$(aptInstall udisks)
     IS_INSTALLED=$(aptInstall acpi-support)
+    IS_INSTALLED=$(aptInstall consolekit)
 	download $DOWNLOAD_URL"custom-actions.pkla"
 	createDirectory "$POWERMANAGEMENT_DIR"
     IS_MOVED=$(move $TEMP_DIRECTORY"custom-actions.pkla" "$POWERMANAGEMENT_DIR")
