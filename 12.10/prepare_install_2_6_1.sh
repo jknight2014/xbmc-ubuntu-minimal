@@ -869,6 +869,8 @@ function cleanUp()
 	sudo apt-get -y autoremove > /dev/null 2>&1
 	sudo apt-get -y autoclean > /dev/null 2>&1
 	sudo apt-get -y clean > /dev/null 2>&1
+        sudo chown -R xbmc:xbmc /home/xbmc/.xbmc > /dev/null 2>&1
+        showInfo "fixed permissions for xbmc userdata folder"
 	
 	if [ -e "$TEMP_DIRECTORY" ]; then
 	    sudo rm -R "$TEMP_DIRECTORY" > /dev/null 2>&1
