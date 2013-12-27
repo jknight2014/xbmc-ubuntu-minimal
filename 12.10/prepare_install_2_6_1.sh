@@ -891,7 +891,7 @@ function rebootMachine()
             echo ""
             echo "Installation complete. Rebooting..."
             echo ""
-            sudo reboot now > /dev/null 2>&1
+            sudo reboot > /dev/null 2>&1
 	        ;;
 	    1) 
 	        showInfo "Installation complete. Not rebooting."
