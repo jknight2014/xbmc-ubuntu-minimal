@@ -1,13 +1,14 @@
 #!/bin/bash
 #
 # @author   Bram van Oploo
-# @date     2013-02-12
-# @version  2.6.1
+# @author2  Matt Filetto
+# @date     2013-12-27
+# @version  2.7
 #
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="2.6.1"
+SCRIPT_VERSION="2.7"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
