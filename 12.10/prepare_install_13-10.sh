@@ -37,7 +37,7 @@ REMOTE_WAKEUP_RULES_FILE="/etc/udev/rules.d/90-enable-remote-wakeup.rules"
 AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 RSYSLOG_FILE="/etc/init/rsyslog.conf"
-POWERMANAGEMENT_DIR="/var/lib/polkit-1/localauthority/50-local.d/"
+POWERMANAGEMENT_DIR="/etc/polkit-1/localauthority/50-local.d/"
 DOWNLOAD_URL="https://github.com/Bram77/xbmc-ubuntu-minimal/raw/master/12.10/download/"
 XBMC_PPA="ppa:team-xbmc/ppa"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
@@ -322,6 +322,7 @@ function installPowerManagement()
     IS_INSTALLED=$(aptInstall udisks)
     IS_INSTALLED=$(aptInstall acpi-support)
     IS_INSTALLED=$(aptInstall consolekit)
+    IS_INSTALLED=$(aptInstall pm-utils)
 	download $DOWNLOAD_URL"custom-actions.pkla"
 	createDirectory "$POWERMANAGEMENT_DIR"
     IS_MOVED=$(move $TEMP_DIRECTORY"custom-actions.pkla" "$POWERMANAGEMENT_DIR")
