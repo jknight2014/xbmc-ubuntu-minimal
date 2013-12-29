@@ -338,6 +338,12 @@ function installAudio()
     sudo alsamixer
 }
 
+function Installnfscommon()
+{
+    showInfo "Installing ubuntu package nfs-common (kernel based NFS clinet support)"
+    IS_INSTALLED=$(aptInstall nfs-common)
+}
+
 function installLirc()
 {
     clear
@@ -748,7 +754,8 @@ function selectAdditionalPackages()
     options=(1 "Lirc (IR remote support)" off
             2 "Hts tvheadend (live TV backend)" off
             3 "Oscam (live HDTV decryption tool)" off
-            4 "Automatic upgrades (every 4 hours)" off)
+            4 "Automatic upgrades (every 4 hours)" off
+            4 "OS-based NFS Support (nfs-common)" off)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -766,6 +773,9 @@ function selectAdditionalPackages()
                 ;;
             4)
                 installAutomaticDistUpgrade
+                ;;
+            5)
+                Installnfscommon
                 ;;
         esac
     done
