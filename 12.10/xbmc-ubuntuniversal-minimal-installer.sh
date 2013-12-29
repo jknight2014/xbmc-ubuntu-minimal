@@ -16,14 +16,12 @@ ENVIRONMENT_FILE="/etc/environment"
 CRONTAB_FILE="/etc/crontab"
 DIST_UPGRADE_FILE="/etc/cron.d/dist_upgrade.sh"
 DIST_UPGRADE_LOG_FILE="/var/log/updates.log"
-XBMC_INIT_FILE="/etc/init.d/xbmc"
 XBMC_ADDONS_DIR=$HOME_DIRECTORY".xbmc/addons/"
 XBMC_USERDATA_DIR=$HOME_DIRECTORY".xbmc/userdata/"
 XBMC_KEYMAPS_DIR=$XBMC_USERDATA_DIR"keymaps/"
 XBMC_ADVANCEDSETTINGS_FILE=$XBMC_USERDATA_DIR"advancedsettings.xml"
 XBMC_INIT_CONF_FILE="/etc/init/xbmc.conf"
 XBMC_XSESSION_FILE="/home/xbmc/.xsession"
-XBMC_CUSTOM_EXEC="/usr/bin/runXBMC"
 UPSTART_JOB_FILE="/lib/init/upstart-job"
 XWRAPPER_FILE="/etc/X11/Xwrapper.config"
 GRUB_CONFIG_FILE="/etc/default/grub"
@@ -46,7 +44,7 @@ XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC installation script v$SCRIPT_VERSION for Ubuntu 12.04 > 13.10 by Matt Filetto :: matt.filetto@gmail.com"
+SCRIPT_TITLE="XBMC ubuntuniversal installation script v$SCRIPT_VERSION for Ubuntu 12.04 ~> 13.10 by Matt Filetto :: matt.filetto@gmail.com"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
@@ -245,7 +243,7 @@ function move()
 
 function installDependencies()
 {
-    echo "-- Installing installation dependencies..."
+    echo "-- Installing script dependencies..."
     echo ""
         sudo apt-get -y install python-software-properties > /dev/null 2>&1
 	sudo apt-get -y install dialog software-properties-common > /dev/null 2>&1
@@ -332,10 +330,6 @@ function installPowerManagement()
 function installAudio()
 {
     showInfo "Installing audio packages....\n!! Please make sure no used channels are muted !!"
-    #IS_INSTALLED=$(aptInstall linux-sound-base)
-    #IS_INSTALLED=$(aptInstall alsa-base)
-    #IS_INSTALLED=$(aptInstall alsa-utils)
-    #IS_INSTALLED=$(aptInstall libasound2)
     sudo apt-get install -y linux-sound-base alsa-base alsa-utils > /dev/null 2>&1
     sudo alsamixer
 }
@@ -629,8 +623,6 @@ function installNyxBoardKeymap()
 function installXbmcBootScreen()
 {
     showInfo "Installing XBMC boot screen (please be patient)..."
-    #IS_INSTALLED=$(aptInstall v86d)
-    #IS_INSTALLED=$(aptInstall plymouth-label)
     sudo apt-get install -y plymouth-label v86d > /dev/null
     createDirectory "$TEMP_DIRECTORY" 1 0
     download $DOWNLOAD_URL"plymouth-theme-xbmc-logo.deb"
