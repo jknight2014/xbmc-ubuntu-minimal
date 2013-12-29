@@ -679,17 +679,10 @@ function applyScreenResolution()
 
 function installLmSensors()
 {
-    showInfo "Installing temperature monitoring package (apply all defaults)..."
+    showInfo "Installing temperature monitoring package (will apply all defaults)..."
     aptInstall lm-sensors
-    clear
-    echo ""
-    echo "$(tput setaf 2)$(tput bold)INSTALLATION INFO: Please confirm all questions with ENTER (applying the suggested option)."
-    echo "$(tput setaf 2)The XBMC installation will continue automatically when finished.$(tput sgr0)"
-    echo ""
-    echo ""
-    
-    sudo sensors-detect
-    
+    sudo yes | sensors-detect
+
     if [ ! -e "$XBMC_ADVANCEDSETTINGS_FILE" ]; then
 	    createDirectory "$TEMP_DIRECTORY" 1 0
 	    download $DOWNLOAD_URL"temperature_monitoring.xml"
