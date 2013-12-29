@@ -791,7 +791,7 @@ function selectAdditionalPackages()
             2 "Hts tvheadend (live TV backend)" off
             3 "Oscam (live HDTV decryption tool)" off
             4 "Automatic upgrades (every 4 hours)" off
-            4 "OS-based NFS Support (nfs-common)" off)
+            5 "OS-based NFS Support (nfs-common)" off)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
