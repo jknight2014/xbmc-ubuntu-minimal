@@ -455,12 +455,47 @@ function enableAtiUnderscan()
     showInfo "Underscan successfully enabled"
 }
 
+function Installxswatppa()
+{
+    showinfo"Install x-swat ppa - required for nvidia-331 drivers"
+        sudo apt-add-repository -y ppa:ubuntu-x-swat/x-updates > /dev/null 2>&1
+        sudo apt-get update > /dev/null 2>&1
+}
+
 function installVideoDriver()
 {
     showInfo "Installing $GFX_CARD video drivers (may take a while)..."
     
     if [[ $GFX_CARD == NVIDIA ]]; then
-        VIDEO_DRIVER="nvidia-current"
+        #VIDEO_DRIVER="nvidia-current"
+
+    cmd=(dialog --title "Choose which nvidia driver version to install" 
+        --backtitle "$SCRIPT_TITLE" 
+        --checklist "Some driver versions play nicely with different cards, Please choose one!" 
+        15 $DIALOG_WIDTH 6)
+        
+   options=(1 "304.88 - ubuntu LTS stable release (legacy)" off
+            2 "319.xx - Shipped with OpenELEC (recomended)" on
+            3 "331.xx - latest (will install additional x-swat ppa)" off)
+            
+    choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+    for choice in $choices
+    do
+        case ${choice//\"/} in
+            1)
+                VIDEO_DRIVER="nvidia-current"
+                ;;
+            2)
+                VIDEO_DRIVER="nvidia-319-updates" 
+                ;;
+            3)
+                Installxswatppa
+                VIDEO_DRIVER="nvidia-331" 
+                ;;
+        esac
+    done
+
     elif [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
         VIDEO_DRIVER="fglrx"
     elif [[ $GFX_CARD == INTEL ]]; then
