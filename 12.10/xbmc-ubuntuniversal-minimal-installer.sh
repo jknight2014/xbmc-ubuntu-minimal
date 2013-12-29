@@ -3,12 +3,12 @@
 # @original author   Bram van Oploo
 # @author  Matt Filetto
 # @date     2013-12-27
-# @version  2.7
+# @version  3.0
 #
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="2.7"
+SCRIPT_VERSION="3.0-BETA"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
