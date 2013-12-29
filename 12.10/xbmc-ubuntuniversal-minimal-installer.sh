@@ -336,7 +336,7 @@ function installAudio()
     #IS_INSTALLED=$(aptInstall alsa-base)
     #IS_INSTALLED=$(aptInstall alsa-utils)
     #IS_INSTALLED=$(aptInstall libasound2)
-    sudo apt-get install -y linux-sound-base alsa-base alsa-utils libsound2 > /dev/null 2>&1
+    sudo apt-get install -y linux-sound-base alsa-base alsa-utils > /dev/null 2>&1
     sudo alsamixer
 }
 
