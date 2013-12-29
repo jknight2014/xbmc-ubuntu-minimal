@@ -464,8 +464,6 @@ function addXswatPpa()
 
 function installVideoDriver()
 {
-    showInfo "Installing $GFX_CARD video drivers (may take a while)..."
-    
     if [[ $GFX_CARD == NVIDIA ]]; then
         #VIDEO_DRIVER="nvidia-current"
 
@@ -487,11 +485,11 @@ function installVideoDriver()
                 VIDEO_DRIVER="nvidia-current"
                 ;;
             2)
-                VIDEO_DRIVER="nvidia-319-updates" 
+                VIDEO_DRIVER="nvidia-319-updates"
                 ;;
             3)
                 AddXswatPpa
-                VIDEO_DRIVER="nvidia-331" 
+                VIDEO_DRIVER="nvidia-331"
                 ;;
         esac
     done
@@ -513,7 +511,8 @@ function installVideoDriver()
         echo ""
         exit
     fi
-    
+
+    showInfo "Installing $GFX_CARD video drivers (may take a while)..."
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
 
     if [ "$IS_INSTALLED" == "1"]; then
