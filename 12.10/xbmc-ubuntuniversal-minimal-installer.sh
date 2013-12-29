@@ -511,7 +511,7 @@ function installVideoDriver()
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
 
     if [ "IS_INSTALLED=$(isPackageInstalled $VIDEO_DRIVER) == 1" ]; then
-        if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]; then
+        if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ] || [ "$GFX_CARD" == "ADVANCED" ]; then
             configureAtiDriver
 
             dialog --title "Disable underscan" \
