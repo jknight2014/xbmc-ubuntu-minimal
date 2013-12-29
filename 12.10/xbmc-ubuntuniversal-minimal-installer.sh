@@ -476,7 +476,7 @@ function selectNvidiaDriver()
                 VIDEO_DRIVER="nvidia-319-updates"
             ;;
         3)
-                AddXswatPpa
+                addXswatPpa
                 VIDEO_DRIVER="nvidia-331"
             ;;
         *)
