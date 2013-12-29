@@ -331,10 +331,11 @@ function installPowerManagement()
 function installAudio()
 {
     showInfo "Installing audio packages....\n!! Please make sure no used channels are muted !!"
-    IS_INSTALLED=$(aptInstall linux-sound-base)
-    IS_INSTALLED=$(aptInstall alsa-base)
-    IS_INSTALLED=$(aptInstall alsa-utils)
-    IS_INSTALLED=$(aptInstall libasound2)
+    #IS_INSTALLED=$(aptInstall linux-sound-base)
+    #IS_INSTALLED=$(aptInstall alsa-base)
+    #IS_INSTALLED=$(aptInstall alsa-utils)
+    #IS_INSTALLED=$(aptInstall libasound2)
+    sudo apt-get install -y linux-sound-base alsa-base alsa-utils libsound2 > /dev/null 2>&1
     sudo alsamixer
 }
 
