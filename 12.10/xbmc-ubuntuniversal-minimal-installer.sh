@@ -343,7 +343,7 @@ function installAudio()
 function Installnfscommon()
 {
     showInfo "Installing ubuntu package nfs-common (kernel based NFS clinet support)"
-    IS_INSTALLED=$(aptInstall nfs-common)
+    sudo apt-get install -y nfs-common > /dev/null 2>&1
 }
 
 function installLirc()
