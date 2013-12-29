@@ -510,7 +510,7 @@ function installVideoDriver()
     showInfo "Installing $GFX_CARD video drivers (may take a while)..."
     IS_INSTALLED=$(aptInstall $VIDEO_DRIVER)
 
-    if [ "$IS_INSTALLED" == "1"]; then
+    if [ "IS_INSTALLED=$(isPackageInstalled $VIDEO_DRIVER) == 1" ]; then
         if [ "$GFX_CARD" == "ATI" ] || [ "$GFX_CARD" == "AMD" ]; then
             configureAtiDriver
 
