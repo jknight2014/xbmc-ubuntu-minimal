@@ -655,6 +655,7 @@ function applyScreenResolution()
     handleFileBackup "$GRUB_CONFIG_FILE" 1 0
     appendToFile "$GRUB_CONFIG_FILE" "GRUB_CMDLINE_LINUX=\"$GRUB_CONFIG\""
     appendToFile "$GRUB_CONFIG_FILE" "GRUB_GFXMODE=$RESOLUTION"
+    appendToFile "$GRUB_CONFIG_FILE" "GRUB_RECORDFAIL_TIMEOUT=0"
     
     handleFileBackup "$INITRAMFS_MODULES_FILE" 1 0
     appendToFile "$INITRAMFS_MODULES_FILE" "uvesafb mode_option=$RESOLUTION-24 mtrr=3 scroll=ywrap"
