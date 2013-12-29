@@ -42,6 +42,7 @@ DOWNLOAD_URL="https://github.com/Albinoman887/xbmc-ubuntu-minimal/raw/master/12.
 XBMC_PPA="ppa:team-xbmc/ppa"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
+XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
@@ -455,11 +456,10 @@ function enableAtiUnderscan()
     showInfo "Underscan successfully enabled"
 }
 
-function Installxswatppa()
+function addXswatPpa()
 {
-    showinfo"Install x-swat ppa - required for nvidia-331 drivers"
-        sudo apt-add-repository -y ppa:ubuntu-x-swat/x-updates > /dev/null 2>&1
-        sudo apt-get update > /dev/null 2>&1
+    showInfo "Adding x-swat/x-updates ppa (“Ubuntu-X” team).."
+	IS_ADDED=$(addRepository "$XSWAT_PPA")
 }
 
 function installVideoDriver()
@@ -490,7 +490,7 @@ function installVideoDriver()
                 VIDEO_DRIVER="nvidia-319-updates" 
                 ;;
             3)
-                Installxswatppa
+                AddXswatPpa
                 VIDEO_DRIVER="nvidia-331" 
                 ;;
         esac
