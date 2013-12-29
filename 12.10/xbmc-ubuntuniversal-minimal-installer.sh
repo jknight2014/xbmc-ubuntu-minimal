@@ -316,12 +316,12 @@ function installPowerManagement()
 {
     showInfo "Installing power management packages..."
     createDirectory "$TEMP_DIRECTORY" 1 0
-    IS_INSTALLED=$(aptInstall policykit-1)
-    IS_INSTALLED=$(aptInstall upower)
-    IS_INSTALLED=$(aptInstall udisks)
-    IS_INSTALLED=$(aptInstall acpi-support)
-    IS_INSTALLED=$(aptInstall consolekit)
-    IS_INSTALLED=$(aptInstall pm-utils)
+    sudo apt-get install -y policykit-1 > /dev/null 2>&1
+    sudo apt-get install -y upower > /dev/null 2>&1
+    sudo apt-get install -y udisks > /dev/null 2>&1
+    sudo apt-get install -y acpi-support > /dev/null 2>&1
+    sudo apt-get install -y consolekit > /dev/null 2>&1
+    sudo apt-get install -y pm-utils > /dev/null 2>&1
 	download $DOWNLOAD_URL"custom-actions.pkla"
 	createDirectory "$POWERMANAGEMENT_DIR"
     IS_MOVED=$(move $TEMP_DIRECTORY"custom-actions.pkla" "$POWERMANAGEMENT_DIR")
