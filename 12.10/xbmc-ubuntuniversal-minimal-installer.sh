@@ -675,7 +675,7 @@ function installLmSensors()
 {
     showInfo "Installing temperature monitoring package (will apply all defaults)..."
     aptInstall lm-sensors
-    sudo sensors-detect < /dev/null > /dev/null 2>&1
+    sudo yes "" | sensors-detect > /dev/null 2>&1
 
     if [ ! -e "$XBMC_ADVANCEDSETTINGS_FILE" ]; then
 	    createDirectory "$TEMP_DIRECTORY" 1 0
