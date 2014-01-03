@@ -463,8 +463,8 @@ function selectNvidiaDriver()
         --radiolist "Some driver versions play nicely with different cards, Please choose one!" 
         15 $DIALOG_WIDTH 6)
         
-   options=(1 "304.88 - ubuntu LTS default (legacy)" off
-            2 "319.xx - Shipped with OpenELEC (recomended)" on
+   options=(1 "304.88 - ubuntu LTS default (old/default)" on
+            2 "319.xx - Shipped with OpenELEC (recomended)" off
             3 "331.xx - latest (will install additional x-swat ppa)" off)
          
     choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
