@@ -44,7 +44,7 @@ XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC ubuntuniversal installation script v$SCRIPT_VERSION for Ubuntu 12.04 ~> 13.10 by Matt Filetto :: matt.filetto@gmail.com"
+SCRIPT_TITLE="XBMC ubuntuniversal installation script v$SCRIPT_VERSION for Ubuntu 12.04 to 13.10 by Matt Filetto :: matt.filetto@gmail.com"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
@@ -405,7 +405,7 @@ function installOscam()
 
 function installXbmc()
 {
-    showInfo "Installing XBMC... (this could take awhile!!)"
+    showInfo "Installing XBMC..."
     IS_INSTALLED=$(aptInstall xbmc)
 }
 
