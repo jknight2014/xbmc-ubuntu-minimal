@@ -458,7 +458,8 @@ function addXswatPpa()
 
 function selectNvidiaDriver()
 {
-    cmd=(dialog --backtitle "Choose which nvidia driver version to install (required)"
+    cmd=(dialog --title "Choose which nvidia driver version to install (required)" \
+                --backtitle "$SCRIPT_TITLE" \
         --radiolist "Some driver versions play nicely with different cards, Please choose one!" 
         15 $DIALOG_WIDTH 6)
         
