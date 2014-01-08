@@ -3,12 +3,12 @@
 # @original author   Bram van Oploo
 # @author  Matt Filetto
 # @date     2013-12-27
-# @version  3.0
+# @version  0.9
 #
 
 XBMC_USER="xbmc"
 THIS_FILE=$0
-SCRIPT_VERSION="3.0-BETA"
+SCRIPT_VERSION="0.9"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
@@ -44,7 +44,7 @@ XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC ubuntuniversal installation script v$SCRIPT_VERSION for Ubuntu 12.04 to 13.10 by Matt Filetto :: matt.filetto@gmail.com"
+SCRIPT_TITLE="XBMC ubuntuniversal minimal installer v$SCRIPT_VERSION for Ubuntu 12.04 to 13.10 by Matt Filetto :: matt.filetto@gmail.com"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
