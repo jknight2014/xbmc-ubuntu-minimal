@@ -48,6 +48,9 @@ SCRIPT_TITLE="XBMC ubuntuniversal installation script v$SCRIPT_VERSION for Ubunt
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
+# import Ubuntu release variables
+. /etc/lsb-release
+
 ## ------ START functions ---------
 
 function showInfo()
@@ -454,6 +457,33 @@ function addXswatPpa()
 {
     showInfo "Adding x-swat/x-updates ppa (“Ubuntu-X” team).."
 	IS_ADDED=$(addRepository "$XSWAT_PPA")
+}
+
+function InstallLTSEnablementStack()
+{
+     if [ "$DISTRIB_RELEASE" == "12.04" ]; then
+         cmd=(dialog --title "LTS Enablement Stack (LTS Backports)" \
+                     --backtitle "$SCRIPT_TITLE" \
+             --radiolist "Enable Ubuntu's LTS Enablement stack to update to 12.04.3. The updates include the 3.8 kernel as well as a lot of updates to Xorg. On a non-minimal install these would be selected by default. Do you have to install/enable this?" 
+             15 $DIALOG_WIDTH 6)
+        
+        options=(1 "No - keep 3.2.xx kernel (default)" on
+                 2 "Yes - Install (recomended)" off)
+         
+        choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+         case ${choice//\"/} in
+             1)
+                     #do nothing
+                 ;;
+             2)
+                     sudo apt-get install --install-recommends -y linux-generic-lts-raring xserver-xorg-lts-raring libgl1-mesa-glx-lts-raring > /dev/null 2>&1
+                 ;;
+             *)
+                     InstallLTSEnablementStack
+                 ;;
+         esac
+     fi
 }
 
 function selectNvidiaDriver()
@@ -906,6 +936,7 @@ installPowerManagement
 installAudio
 selectXbmcTweaks
 selectAdditionalPackages
+InstallLTSEnablementStack
 allowRemoteWakeup
 optimizeInstallation
 cleanUp
