@@ -477,13 +477,19 @@ function InstallLTSEnablementStack()
                      #do nothing
                  ;;
              2)
-                     sudo apt-get install --install-recommends -y linux-generic-lts-raring xserver-xorg-lts-raring libgl1-mesa-glx-lts-raring > /dev/null 2>&1
+                     LTSEnablementStack
                  ;;
              *)
                      InstallLTSEnablementStack
                  ;;
          esac
      fi
+}
+
+function LTSEnablementStack()
+{
+showInfo "Installing ubuntu LTS Enablement Stack..."
+sudo apt-get install --install-recommends -y linux-generic-lts-raring xserver-xorg-lts-raring libgl1-mesa-glx-lts-raring > /dev/null 2>&1
 }
 
 function selectNvidiaDriver()
