@@ -490,6 +490,11 @@ function LTSEnablementStack()
 {
 showInfo "Installing ubuntu LTS Enablement Stack..."
 sudo apt-get install --install-recommends -y linux-generic-lts-raring xserver-xorg-lts-raring libgl1-mesa-glx-lts-raring > /dev/null 2>&1
+# HACK: dpkg is still processsing during next functions, allow some time to settle
+sleep 2
+showInfo "ubuntu LTS Enablement Stack install completed..."
+#sleep again to make sure dpkg is freed for next function
+sleep 3
 }
 
 function selectNvidiaDriver()
