@@ -848,6 +848,7 @@ function selectAdditionalPackages()
 function optimizeInstallation()
 {
     showInfo "Optimizing installation..."
+    sudo echo "none /tmp tmpfs defaults 0 0" >> /etc/fstab
     sudo service apparmor stop > /dev/null &2>1
     sudo service apparmor teardown > /dev/null &2>1
     sudo update-rc.d -f apparmor remove > /dev/null &2>1	
