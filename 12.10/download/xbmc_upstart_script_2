@@ -1,12 +1,15 @@
-# xbmc-upstart
+# xbmc standalone service
+
 # starts XBMC on startup by using xinit.
+# will try to auto respawn for 5 mins if it crashes
+# launches xbmc in the "standalone mode" with no xcursor (cursor in xbmc still works)
 # by default runs as xbmc, to change edit below.
 env USER=xbmc
 
-description     "XBMC-barebones-upstart-script"
+description     "XBMC standalone service"
 author          "Matt Filetto"
 
-start on (filesystem and stopped udevtrigger)
+start on runlevel [2345]
 stop on runlevel [016]
 
 # tell upstart to respawn the process if abnormal exit
@@ -17,6 +20,5 @@ respawn limit 10 5
 limit nice 21 21
 
 script
-  exec su -c "xinit /usr/bin/xbmc --standalone :0" $USER
-  #exec su -c "xinit /usr/bin/xbmc -d --standalone -- -nocursor :0" $USER ##Kill Cursor/Console X and mouse pointer on XBMC start.
+  exec su -c "xinit /usr/bin/xbmc --standalone -- -nocursor :0" $USER
 end script
