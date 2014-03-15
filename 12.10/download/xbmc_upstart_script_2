@@ -9,7 +9,7 @@ env USER=xbmc
 description     "XBMC standalone service"
 author          "Matt Filetto"
 
-start on runlevel [2345]
+start on (filesystem and stopped udevtrigger)
 stop on runlevel [016]
 
 # tell upstart to respawn the process if abnormal exit
