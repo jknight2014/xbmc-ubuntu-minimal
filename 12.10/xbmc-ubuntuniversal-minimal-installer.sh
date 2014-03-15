@@ -852,9 +852,12 @@ function optimizeInstallation()
     sudo echo "none /tmp tmpfs defaults 0 0" >> /etc/fstab
 
     sudo service apparmor stop > /dev/null &2>1
+    sleep 2
     sudo service apparmor teardown > /dev/null &2>1
+    sleep 2
     sudo update-rc.d -f apparmor remove > /dev/null &2>1	
-    sudo apt-get remove --purge apparmor -y > /dev/null &2>1
+    sleep 2
+    sudo apt-get purge apparmor -y > /dev/null &2>1
     sleep 3
     
     createDirectory "$TEMP_DIRECTORY" 1 0
@@ -872,8 +875,11 @@ function cleanUp()
 {
     showInfo "Cleaning up..."
 	sudo apt-get -y autoremove > /dev/null 2>&1
+        sleep 1
 	sudo apt-get -y autoclean > /dev/null 2>&1
+        sleep 1
 	sudo apt-get -y clean > /dev/null 2>&1
+        sleep 1
         sudo chown -R xbmc:xbmc /home/xbmc/.xbmc > /dev/null 2>&1
         showInfo "fixed permissions for xbmc userdata folder"
 	
