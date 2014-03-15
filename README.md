@@ -10,6 +10,7 @@ xbmc-ubuntuniversal-minimal-installer script
 ```
 cd ~ 
 wget https://github.com/Albinoman887/xbmc-ubuntu-minimal/raw/master/12.10/xbmc-ubuntuniversal-minimal-installer.sh
+sudo su
 bash ./xbmc-ubuntuniversal-minimal-installer.sh
 ```
 
