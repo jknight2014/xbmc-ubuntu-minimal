@@ -11,6 +11,7 @@ THIS_FILE=$0
 SCRIPT_VERSION="0.9"
 VIDEO_DRIVER=""
 HOME_DIRECTORY="/home/$XBMC_USER/"
+KERNEL_DIRECTORY=$HOME_DIRECTORY"kernel/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
 ENVIRONMENT_FILE="/etc/environment"
 CRONTAB_FILE="/etc/crontab"
@@ -549,8 +550,8 @@ function selectNvidiaDriver()
         --radiolist "Some driver versions play nicely with different cards, Please choose one!" 
         15 $DIALOG_WIDTH 6)
         
-   options=(1 "304.88 - ubuntu LTS default (old/default)" on
-            2 "319.xx - Shipped with OpenELEC (recomended)" off
+   options=(1 "304.88 - ubuntu LTS default (default)" on
+            2 "319.xx - Shipped with OpenELEC" off
             3 "331.xx - latest (will install additional x-swat ppa)" off)
          
     choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
