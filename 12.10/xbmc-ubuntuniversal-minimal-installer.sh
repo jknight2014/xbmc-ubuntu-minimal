@@ -41,6 +41,7 @@ XBMC_PPA="ppa:team-xbmc/ppa"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
 XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
+MESA_PPA="ppa:wsnipex/mesa"
 
 LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
 DIALOG_WIDTH=70
@@ -439,6 +440,50 @@ function configureAtiDriver()
     sudo aticonfig --set-pcs-u32=MCIL,HWUVD_H264Level51Support,1 > /dev/null 2>&1
 }
 
+function ChooseATIDriver()
+{
+         cmd=(dialog --title "Radeon-OSS drivers" \
+                     --backtitle "$SCRIPT_TITLE" \
+             --radiolist "It seems you are running ubuntu 13.10. You may install updated radeon oss drivers with VDPAU support. this allows for HD audio amung other things. This is the new default for Gotham and XVBA is depreciated. bottom line. this is what you want." 
+             15 $DIALOG_WIDTH 6)
+        
+        options=(1 "Yes- install radon-OSS (will install 3.13 kernel)" on
+                 2 "No - Keep old fglrx drivers (NOT RECOMENDED)" off)
+         
+        choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+         case ${choice//\"/} in
+             1)
+                     InstallRadeonOSS
+                 ;;
+             2)
+                     VIDEO_DRIVER="fglrx"
+                 ;;
+             *)
+                     ChooseATIDriver
+                 ;;
+         esac
+}
+
+function InstallRadeonOSS()
+{
+        VIDEO_DRIVER="xserver-xorg-video-ati"
+        showInfo "Adding Wsnsprix MESA PPA..."
+	IS_ADDED=$(addRepository "$MESA_PPA")
+        sudo apt-get update
+        sudo apt-get dist-upgrade
+        showinfo "installing reguired mesa patches..."
+        sudo apt-get install -y libg3dvl-mesa vdpauinfo linux-firmware
+        showinfo "Mesa patches installation complete"
+        mkdir -p ~/kernel
+        cd ~/kernel
+        showinfo "Downloading and installing 3.13 kernel (may take awhile)..."
+        wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.13.5-trusty/linux-headers-3.13.5-031305-generic_3.13.5-031305.201402221823_amd64.deb http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.13.5-trusty/linux-headers-3.13.5-031305_3.13.5-031305.201402221823_all.deb http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.13.5-trusty/linux-image-3.13.5-031305-generic_3.13.5-031305.201402221823_amd64.deb
+        sudo dpkg -i *3.13.5*deb
+        sudo rm -rf ~/kernel
+        showinfo "kernel Installation Complete, Radeon OSS VDPAU install completed"
+}
+
 function disbaleAtiUnderscan()
 {
 	sudo kill $(pidof X) > /dev/null 2>&1
@@ -532,7 +577,11 @@ function installVideoDriver()
     if [[ $GFX_CARD == NVIDIA ]]; then
         selectNvidiaDriver
     elif [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
-        VIDEO_DRIVER="fglrx"
+            if [ "$DISTRIB_RELEASE" == "13.10" ]; then
+            ChooseATIDriver
+            else
+            VIDEO_DRIVER="fglrx"
+            fi
     elif [[ $GFX_CARD == INTEL ]]; then
         VIDEO_DRIVER="i965-va-driver"
     elif [[ $GFX_CARD == VMWARE ]]; then
@@ -692,6 +741,9 @@ function applyScreenResolution()
     
     if [[ $GFX_CARD == INTEL ]]; then
         GRUB_CONFIG="usbcore.autosuspend=-1 video=uvesafb:mode_option=$RESOLUTION-24,mtrr=3,scroll=ywrap"
+    fi
+    if [[ $RADEON_OSS == 1 ]]; then
+        GRUB_CONFIG="usbcore.autosuspend=-1 video=uvesafb:mode_option=$RESOLUTION-24,mtrr=3,scroll=ywrap radeon.audio=1 radeon.dpm=1 quiet splash"
     fi
     
     handleFileBackup "$GRUB_CONFIG_FILE" 1 0
