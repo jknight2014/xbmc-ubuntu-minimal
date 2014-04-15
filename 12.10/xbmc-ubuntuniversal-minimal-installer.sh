@@ -39,6 +39,7 @@ RSYSLOG_FILE="/etc/init/rsyslog.conf"
 POWERMANAGEMENT_DIR="/etc/polkit-1/localauthority/50-local.d/"
 DOWNLOAD_URL="https://github.com/Albinoman887/xbmc-ubuntu-minimal/raw/master/12.10/download/"
 XBMC_PPA="ppa:team-xbmc/ppa"
+XBMC_PPA_UNSTABLE="ppa:team-xbmc/unstable"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
 XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
@@ -299,8 +300,29 @@ function addUserToRequiredGroups()
 
 function addXbmcPpa()
 {
-    showInfo "Adding official team-xbmc PPA..."
-	IS_ADDED=$(addRepository "$XBMC_PPA")
+    cmd=(dialog --title "Which XBMC PPA?" \
+        --backtitle "$SCRIPT_TITLE" \
+        --radiolist "Which XBMC PPA would you like to use? The official stable PPA will install the current release version of XBMC or you can use the unstable PPA which will install the current testing (Alpha/Beta/RC) version of XBMC. If unsure use the default Official PPA." 
+        15 $DIALOG_WIDTH 6)
+        
+    options=(1 "Official PPA - Install the release version." on
+             2 "Unstable PPA - Install the Alpha/Beta/RC version." off)
+         
+    choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+
+    case ${choice//\"/} in
+        1)
+            showInfo "Adding official team-xbmc PPA..."
+            IS_ADDED=$(addRepository "$XBMC_PPA")
+            ;;
+        2)
+            showInfo "Adding unstable team-xbmc PPA..."
+            IS_ADDED=$(addRepository "$XBMC_PPA_UNSTABLE")
+            ;;
+        *)
+            addXbmcPpa
+            ;;
+    esac
 }
 
 function distUpgrade()
