@@ -494,7 +494,7 @@ function InstallRadeonOSS()
     showInfo "Adding Wsnsprix MESA PPA..."
     IS_ADDED=$(addRepository "$MESA_PPA")
     sudo apt-get update
-    sudo apt-get dist-upgrade
+    sudo apt-get -y dist-upgrade
     showinfo "installing reguired mesa patches..."
     sudo apt-get install -y libg3dvl-mesa vdpauinfo linux-firmware
     showinfo "Mesa patches installation complete"
