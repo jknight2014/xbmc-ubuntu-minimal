@@ -20,5 +20,5 @@ respawn limit 10 5
 limit nice 21 21
 
 script
-  exec su -c "xinit /usr/bin/xbmc --standalone -- -nocursor :0" $USER
+  exec su -c "xinit /usr/bin/xbmc --standalone -- -bs -nocursor :0" $USER
 end script
