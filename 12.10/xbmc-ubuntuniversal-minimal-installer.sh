@@ -571,40 +571,40 @@ showInfo "ubuntu LTS Enablement Stack install completed..."
 sleep 3
 }
 
-function selectNvidiaDriver()
-{
-    cmd=(dialog --title "Choose which nvidia driver version to install (required)" \
-                --backtitle "$SCRIPT_TITLE" \
-        --radiolist "Some driver versions play nicely with different cards, Please choose one!" 
-        15 $DIALOG_WIDTH 6)
-        
-   options=(1 "304.88 - ubuntu LTS default (default)" on
-            2 "319.xx - Shipped with OpenELEC" off
-            3 "331.xx - latest (will install additional x-swat ppa)" off)
-         
-    choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
-
-    case ${choice//\"/} in
-        1)
-                VIDEO_DRIVER="nvidia-current"
-            ;;
-        2)
-                VIDEO_DRIVER="nvidia-319-updates"
-            ;;
-        3)
-                addXswatPpa
-                VIDEO_DRIVER="nvidia-331"
-            ;;
-        *)
-                selectNvidiaDriver
-            ;;
-    esac
-}
+#function selectNvidiaDriver()
+#{
+#    cmd=(dialog --title "Choose which nvidia driver version to install (required)" \
+#                --backtitle "$SCRIPT_TITLE" \
+#        --radiolist "Some driver versions play nicely with different cards, Please choose one!" 
+#        15 $DIALOG_WIDTH 6)
+#        
+#   options=(1 "304.88 - ubuntu LTS default (default)" on
+#            2 "319.xx - Shipped with OpenELEC" off
+#            3 "331.xx - latest (will install additional x-swat ppa)" off)
+#         
+#    choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
+#
+#    case ${choice//\"/} in
+#        1)
+#                VIDEO_DRIVER="nvidia-current"
+#            ;;
+#        2)
+#                VIDEO_DRIVER="nvidia-319-updates"
+#            ;;
+#        3)
+#                addXswatPpa
+#                VIDEO_DRIVER="nvidia-331"
+#            ;;
+#        *)
+#                selectNvidiaDriver
+#            ;;
+#    esac
+#}
 
 function installVideoDriver()
 {
     if [[ $GFX_CARD == NVIDIA ]]; then
-        selectNvidiaDriver
+         VIDEO_DRIVER="nvidia-current"
     elif [[ $GFX_CARD == ATI ]] || [[ $GFX_CARD == AMD ]] || [[ $GFX_CARD == ADVANCED ]]; then
         if [ ${DISTRIB_RELEASE//[^[:digit:]]} -ge 1310 ]; then
             ChooseATIDriver
