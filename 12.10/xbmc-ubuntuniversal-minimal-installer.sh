@@ -491,16 +491,18 @@ function ChooseATIDriver()
 function InstallRadeonOSS()
 {
     VIDEO_DRIVER="xserver-xorg-video-ati"
-    showInfo "Adding Wsnsprix MESA PPA..."
-    IS_ADDED=$(addRepository "$MESA_PPA")
-    sudo apt-get update
-    sudo apt-get -y dist-upgrade
-    showinfo "installing reguired mesa patches..."
-    sudo apt-get install -y libg3dvl-mesa vdpauinfo linux-firmware
-    showinfo "Mesa patches installation complete"
-    if [ ${DISTRIB_RELEASE//[^[:digit:]]} -ge 1404 ]; then #No need to install 3.13.5 kernel if using 14.04 or above because the default Trusty kernel is 3.13.5 based
+    if [ ${DISTRIB_RELEASE//[^[:digit:]]} -ge 1404 ]; then
+        showinfo "installing mesa VDPAU packages..."
+        sudo apt-get install -y mesa-vdpau-drivers vdpauinfo
         showinfo "Radeon OSS VDPAU install completed"
     else
+        showInfo "Adding Wsnsprix MESA PPA..."
+        IS_ADDED=$(addRepository "$MESA_PPA")
+        sudo apt-get update
+        sudo apt-get dist-upgrade
+        showinfo "installing reguired mesa patches..."
+        sudo apt-get install -y libg3dvl-mesa vdpauinfo linux-firmware
+        showinfo "Mesa patches installation complete"
         mkdir -p ~/kernel
         cd ~/kernel
         showinfo "Downloading and installing 3.13 kernel (may take awhile)..."
