@@ -6,23 +6,23 @@
 # @version  0.93
 #
 
-XBMC_USER="xbmc"
+KODI_USER="kodi"
 THIS_FILE=$0
 SCRIPT_VERSION="0.93"
 VIDEO_DRIVER=""
-HOME_DIRECTORY="/home/$XBMC_USER/"
+HOME_DIRECTORY="/home/$KODI_USER/"
 KERNEL_DIRECTORY=$HOME_DIRECTORY"kernel/"
 TEMP_DIRECTORY=$HOME_DIRECTORY"temp/"
 ENVIRONMENT_FILE="/etc/environment"
 CRONTAB_FILE="/etc/crontab"
 DIST_UPGRADE_FILE="/etc/cron.d/dist_upgrade.sh"
 DIST_UPGRADE_LOG_FILE="/var/log/updates.log"
-XBMC_ADDONS_DIR=$HOME_DIRECTORY".xbmc/addons/"
-XBMC_USERDATA_DIR=$HOME_DIRECTORY".xbmc/userdata/"
-XBMC_KEYMAPS_DIR=$XBMC_USERDATA_DIR"keymaps/"
-XBMC_ADVANCEDSETTINGS_FILE=$XBMC_USERDATA_DIR"advancedsettings.xml"
-XBMC_INIT_CONF_FILE="/etc/init/xbmc.conf"
-XBMC_XSESSION_FILE="/home/xbmc/.xsession"
+KODI_ADDONS_DIR=$HOME_DIRECTORY".kodi/addons/"
+KODI_USERDATA_DIR=$HOME_DIRECTORY".kodi/userdata/"
+KODI_KEYMAPS_DIR=$KODI_USERDATA_DIR"keymaps/"
+KODI_ADVANCEDSETTINGS_FILE=$KODI_USERDATA_DIR"advancedsettings.xml"
+KODI_INIT_CONF_FILE="/etc/init/kodi.conf"
+KODI_XSESSION_FILE="/home/kodi/.xsession"
 UPSTART_JOB_FILE="/lib/init/upstart-job"
 XWRAPPER_FILE="/etc/X11/Xwrapper.config"
 GRUB_CONFIG_FILE="/etc/default/grub"
@@ -37,17 +37,17 @@ AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 RSYSLOG_FILE="/etc/init/rsyslog.conf"
 POWERMANAGEMENT_DIR="/etc/polkit-1/localauthority/50-local.d/"
-DOWNLOAD_URL="https://github.com/Albinoman887/xbmc-ubuntu-minimal/raw/master/12.10/download/"
-XBMC_PPA="ppa:team-xbmc/ppa"
-XBMC_PPA_UNSTABLE="ppa:team-xbmc/unstable"
+DOWNLOAD_URL="https://github.com/Albinoman887/kodi-ubuntu-minimal/raw/master/12.10/download/"
+KODI_PPA="ppa:team-xbmc/ppa"
+KODI_PPA_UNSTABLE="ppa:team-xbmc/unstable"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
 OSCAM_PPA="ppa:oscam/ppa"
 XSWAT_PPA="ppa:ubuntu-x-swat/x-updates"
 MESA_PPA="ppa:wsnipex/mesa"
 
-LOG_FILE=$HOME_DIRECTORY"xbmc_installation.log"
+LOG_FILE=$HOME_DIRECTORY"kodi_installation.log"
 DIALOG_WIDTH=70
-SCRIPT_TITLE="XBMC ubuntuniversal minimal installer v$SCRIPT_VERSION for Ubuntu 12.04 to 14.04 by Matt Filetto :: matt.filetto@gmail.com"
+SCRIPT_TITLE="KODI ubuntuniversal minimal installer v$SCRIPT_VERSION for Ubuntu 12.04 to 14.04 by Matt Filetto :: matt.filetto@gmail.com"
 
 GFX_CARD=$(lspci |grep VGA |awk -F: {' print $3 '} |awk {'print $1'} |tr [a-z] [A-Z])
 
@@ -72,7 +72,7 @@ function showError()
 
 function showDialog()
 {
-	dialog --title "XBMC installation script" \
+	dialog --title "KODI installation script" \
 		--backtitle "$SCRIPT_TITLE" \
 		--msgbox "\n$@" 12 $DIALOG_WIDTH
 }
@@ -282,27 +282,27 @@ function fixUsbAutomount()
 function applyXbmcNiceLevelPermissions()
 {
 	createFile $SYSTEM_LIMITS_FILE
-    appendToFile $SYSTEM_LIMITS_FILE "$XBMC_USER             -       nice            -1"
-	showInfo "Allowed XBMC to prioritize threads"
+    appendToFile $SYSTEM_LIMITS_FILE "$KODI_USER             -       nice            -1"
+	showInfo "Allowed KODI to prioritize threads"
 }
 
 function addUserToRequiredGroups()
 {
-	sudo adduser $XBMC_USER video > /dev/null 2>&1
-	sudo adduser $XBMC_USER audio > /dev/null 2>&1
-	sudo adduser $XBMC_USER users > /dev/null 2>&1
-	sudo adduser $XBMC_USER fuse > /dev/null 2>&1
-	sudo adduser $XBMC_USER cdrom > /dev/null 2>&1
-	sudo adduser $XBMC_USER plugdev > /dev/null 2>&1
-        sudo adduser $XBMC_USER dialout > /dev/null 2>&1
-	showInfo "XBMC user added to required groups"
+	sudo adduser $KODI_USER video > /dev/null 2>&1
+	sudo adduser $KODI_USER audio > /dev/null 2>&1
+	sudo adduser $KODI_USER users > /dev/null 2>&1
+	sudo adduser $KODI_USER fuse > /dev/null 2>&1
+	sudo adduser $KODI_USER cdrom > /dev/null 2>&1
+	sudo adduser $KODI_USER plugdev > /dev/null 2>&1
+        sudo adduser $KODI_USER dialout > /dev/null 2>&1
+	showInfo "KODI user added to required groups"
 }
 
 function addXbmcPpa()
 {
-    cmd=(dialog --title "Which XBMC PPA?" \
+    cmd=(dialog --title "Which KODI PPA?" \
         --backtitle "$SCRIPT_TITLE" \
-        --radiolist "Which XBMC PPA would you like to use? The official stable PPA will install the current release version of XBMC or you can use the unstable PPA which will install the current testing (Alpha/Beta/RC) version of XBMC. If unsure use the default Official PPA." 
+        --radiolist "Which KODI PPA would you like to use? The official stable PPA will install the current release version of KODI or you can use the unstable PPA which will install the current testing (Alpha/Beta/RC) version of KODI. If unsure use the default Official PPA." 
         15 $DIALOG_WIDTH 6)
         
     options=(1 "Official PPA - Install the release version." on
@@ -312,12 +312,12 @@ function addXbmcPpa()
 
     case ${choice//\"/} in
         1)
-            showInfo "Adding official team-xbmc PPA..."
-            IS_ADDED=$(addRepository "$XBMC_PPA")
+            showInfo "Adding official team-kodi PPA..."
+            IS_ADDED=$(addRepository "$KODI_PPA")
             ;;
         2)
-            showInfo "Adding unstable team-xbmc PPA..."
-            IS_ADDED=$(addRepository "$XBMC_PPA_UNSTABLE")
+            showInfo "Adding unstable team-kodi PPA..."
+            IS_ADDED=$(addRepository "$KODI_PPA_UNSTABLE")
             ;;
         *)
             addXbmcPpa
@@ -432,8 +432,8 @@ function installOscam()
 
 function installXbmc()
 {
-    showInfo "Installing XBMC..."
-    IS_INSTALLED=$(aptInstall xbmc)
+    showInfo "Installing KODI..."
+    IS_INSTALLED=$(aptInstall kodi)
 }
 
 function installXbmcAddonRepositoriesInstaller()
@@ -441,10 +441,10 @@ function installXbmcAddonRepositoriesInstaller()
     showInfo "Installing Addon Repositories Installer addon..."
 	createDirectory "$TEMP_DIRECTORY" 1 0
 	download $DOWNLOAD_URL"plugin.program.repo.installer-1.0.5.tar.gz"
-    createDirectory "$XBMC_ADDONS_DIR" 0 0
+    createDirectory "$KODI_ADDONS_DIR" 0 0
 
     if [ -e $TEMP_DIRECTORY"plugin.program.repo.installer-1.0.5.tar.gz" ]; then
-        tar -xvzf $TEMP_DIRECTORY"plugin.program.repo.installer-1.0.5.tar.gz" -C "$XBMC_ADDONS_DIR" > /dev/null 2>&1
+        tar -xvzf $TEMP_DIRECTORY"plugin.program.repo.installer-1.0.5.tar.gz" -C "$KODI_ADDONS_DIR" > /dev/null 2>&1
         
         if [ "$?" == "0" ]; then
 	        showInfo "Addon Repositories Installer addon successfully installed"
@@ -675,21 +675,21 @@ function installAutomaticDistUpgrade()
 
 function removeAutorunFiles()
 {
-    if [ -e "$XBMC_INIT_FILE" ]; then
+    if [ -e "$KODI_INIT_FILE" ]; then
         showInfo "Removing existing autorun script..."
-        sudo update-rc.d xbmc remove > /dev/null 2>&1
-        sudo rm "$XBMC_INIT_FILE" > /dev/null 2>&1
+        sudo update-rc.d kodi remove > /dev/null 2>&1
+        sudo rm "$KODI_INIT_FILE" > /dev/null 2>&1
 
-        if [ -e "$XBMC_INIT_CONF_FILE" ]; then
-		    sudo rm "$XBMC_INIT_CONF_FILE" > /dev/null 2>&1
+        if [ -e "$KODI_INIT_CONF_FILE" ]; then
+		    sudo rm "$KODI_INIT_CONF_FILE" > /dev/null 2>&1
 	    fi
 	    
-	    if [ -e "$XBMC_CUSTOM_EXEC" ]; then
-	        sudo rm "$XBMC_CUSTOM_EXEC" > /dev/null 2>&1
+	    if [ -e "$KODI_CUSTOM_EXEC" ]; then
+	        sudo rm "$KODI_CUSTOM_EXEC" > /dev/null 2>&1
 	    fi
 	    
-	    if [ -e "$XBMC_XSESSION_FILE" ]; then
-	        sudo rm "$XBMC_XSESSION_FILE" > /dev/null 2>&1
+	    if [ -e "$KODI_XSESSION_FILE" ]; then
+	        sudo rm "$KODI_XSESSION_FILE" > /dev/null 2>&1
 	    fi
 	    
 	    showInfo "Old autorun script successfully removed"
@@ -699,20 +699,20 @@ function removeAutorunFiles()
 function installXbmcUpstartScript()
 {
     removeAutorunFiles
-    showInfo "Installing XBMC upstart autorun support..."
+    showInfo "Installing KODI upstart autorun support..."
     createDirectory "$TEMP_DIRECTORY" 1 0
-	download $DOWNLOAD_URL"xbmc_upstart_script_2"
+	download $DOWNLOAD_URL"kodi_upstart_script_2"
 
-	if [ -e $TEMP_DIRECTORY"xbmc_upstart_script_2" ]; then
-	    IS_MOVED=$(move $TEMP_DIRECTORY"xbmc_upstart_script_2" "$XBMC_INIT_CONF_FILE")
+	if [ -e $TEMP_DIRECTORY"kodi_upstart_script_2" ]; then
+	    IS_MOVED=$(move $TEMP_DIRECTORY"kodi_upstart_script_2" "$KODI_INIT_CONF_FILE")
 
 	    if [ "$IS_MOVED" == "1" ]; then
-	        sudo ln -s "$UPSTART_JOB_FILE" "$XBMC_INIT_FILE" > /dev/null 2>&1
+	        sudo ln -s "$UPSTART_JOB_FILE" "$KODI_INIT_FILE" > /dev/null 2>&1
 	    else
-	        showError "XBMC upstart configuration failed"
+	        showError "KODI upstart configuration failed"
 	    fi
 	else
-	    showError "Download of XBMC upstart configuration file failed"
+	    showError "Download of KODI upstart configuration file failed"
 	fi
 }
 
@@ -721,14 +721,14 @@ function installNyxBoardKeymap()
     showInfo "Applying Pulse-Eight Motorola NYXboard advanced keymap..."
 	createDirectory "$TEMP_DIRECTORY" 1 0
 	download $DOWNLOAD_URL"nyxboard.tar.gz"
-    createDirectory "$XBMC_KEYMAPS_DIR" 0 0
+    createDirectory "$KODI_KEYMAPS_DIR" 0 0
 
-    if [ -e $XBMC_KEYMAPS_DIR"keyboard.xml" ]; then
-        handleFileBackup $XBMC_KEYMAPS_DIR"keyboard.xml" 0 1
+    if [ -e $KODI_KEYMAPS_DIR"keyboard.xml" ]; then
+        handleFileBackup $KODI_KEYMAPS_DIR"keyboard.xml" 0 1
     fi
 
     if [ -e $TEMP_DIRECTORY"nyxboard.tar.gz" ]; then
-        tar -xvzf $TEMP_DIRECTORY"nyxboard.tar.gz" -C "$XBMC_KEYMAPS_DIR" > /dev/null 2>&1
+        tar -xvzf $TEMP_DIRECTORY"nyxboard.tar.gz" -C "$KODI_KEYMAPS_DIR" > /dev/null 2>&1
         
         if [ "$?" == "0" ]; then
 	        showInfo "Pulse-Eight Motorola NYXboard advanced keymap successfully applied"
@@ -742,20 +742,20 @@ function installNyxBoardKeymap()
 
 function installXbmcBootScreen()
 {
-    showInfo "Installing XBMC boot screen (please be patient)..."
+    showInfo "Installing KODI boot screen (please be patient)..."
     sudo apt-get install -y plymouth-label v86d > /dev/null
     createDirectory "$TEMP_DIRECTORY" 1 0
-    download $DOWNLOAD_URL"plymouth-theme-xbmc-logo.deb"
+    download $DOWNLOAD_URL"plymouth-theme-kodi-logo.deb"
     
-    if [ -e $TEMP_DIRECTORY"plymouth-theme-xbmc-logo.deb" ]; then
-        sudo dpkg -i $TEMP_DIRECTORY"plymouth-theme-xbmc-logo.deb" > /dev/null 2>&1
-        update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/xbmc-logo/xbmc-logo.plymouth 100 > /dev/null 2>&1
+    if [ -e $TEMP_DIRECTORY"plymouth-theme-kodi-logo.deb" ]; then
+        sudo dpkg -i $TEMP_DIRECTORY"plymouth-theme-kodi-logo.deb" > /dev/null 2>&1
+        update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/kodi-logo/kodi-logo.plymouth 100 > /dev/null 2>&1
         handleFileBackup "$INITRAMFS_SPLASH_FILE" 1 1
         createFile "$INITRAMFS_SPLASH_FILE" 1 1
         appendToFile "$INITRAMFS_SPLASH_FILE" "FRAMEBUFFER=y"
-        showInfo "XBMC boot screen successfully installed"
+        showInfo "KODI boot screen successfully installed"
     else
-        showError "Download of XBMC boot screen package failed"
+        showError "Download of KODI boot screen package failed"
     fi
 }
 
@@ -799,16 +799,16 @@ function installLmSensors()
     aptInstall lm-sensors
     sudo yes "" | sensors-detect > /dev/null 2>&1
 
-    if [ ! -e "$XBMC_ADVANCEDSETTINGS_FILE" ]; then
+    if [ ! -e "$KODI_ADVANCEDSETTINGS_FILE" ]; then
 	    createDirectory "$TEMP_DIRECTORY" 1 0
 	    download $DOWNLOAD_URL"temperature_monitoring.xml"
-	    createDirectory "$XBMC_USERDATA_DIR" 0 0
-	    IS_MOVED=$(move $TEMP_DIRECTORY"temperature_monitoring.xml" "$XBMC_ADVANCEDSETTINGS_FILE")
+	    createDirectory "$KODI_USERDATA_DIR" 0 0
+	    IS_MOVED=$(move $TEMP_DIRECTORY"temperature_monitoring.xml" "$KODI_ADVANCEDSETTINGS_FILE")
 
 	    if [ "$IS_MOVED" == "1" ]; then
-            showInfo "Temperature monitoring successfully enabled in XBMC"
+            showInfo "Temperature monitoring successfully enabled in KODI"
         else
-            showError "Temperature monitoring could not be enabled in XBMC"
+            showError "Temperature monitoring could not be enabled in KODI"
         fi
     fi
     
@@ -826,7 +826,7 @@ function reconfigureXServer()
 
 function selectXbmcTweaks()
 {
-    cmd=(dialog --title "Optional XBMC tweaks and additions" 
+    cmd=(dialog --title "Optional KODI tweaks and additions" 
         --backtitle "$SCRIPT_TITLE" 
         --checklist "Plese select to install or apply:" 
         15 $DIALOG_WIDTH 6)
@@ -961,8 +961,8 @@ function cleanUp()
         sleep 1
 	sudo apt-get -y clean > /dev/null 2>&1
         sleep 1
-        sudo chown -R xbmc:xbmc /home/xbmc/.xbmc > /dev/null 2>&1
-        showInfo "fixed permissions for xbmc userdata folder"
+        sudo chown -R kodi:kodi /home/kodi/.kodi > /dev/null 2>&1
+        showInfo "fixed permissions for kodi userdata folder"
 	
 	if [ -e "$TEMP_DIRECTORY" ]; then
 	    sudo rm -R "$TEMP_DIRECTORY" > /dev/null 2>&1
@@ -1018,7 +1018,7 @@ createFile "$LOG_FILE" 0 1
 echo ""
 installDependencies
 echo "Loading installer..."
-showDialog "Welcome to the XBMC minimal installation script. Some parts may take a while to install depending on your internet connection speed.\n\nPlease be patient..."
+showDialog "Welcome to the KODI minimal installation script. Some parts may take a while to install depending on your internet connection speed.\n\nPlease be patient..."
 trap control_c SIGINT
 
 fixLocaleBug
