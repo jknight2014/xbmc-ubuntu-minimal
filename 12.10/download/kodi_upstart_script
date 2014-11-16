@@ -1,6 +1,6 @@
-# xbmc-minimal
-# init XBMC environment and starts XBMC in fullscreen (if asked to do so)
-description     "XBMC-minimal"
+# kodi-minimal
+# init KODI environment and starts KODI in fullscreen (if asked to do so)
+description     "KODI-minimal"
 author          "Luigi Capriotti - Modified by Alanwww1, wakeup stuff: Mianos"
 
 start on (filesystem and stopped udevtrigger)
@@ -8,16 +8,16 @@ start on (filesystem and stopped udevtrigger)
 stop on runlevel [06]
 
 pre-start script
-  if [ -f /home/xbmc/.xsession ] ; then
-    rm /home/xbmc/.xsession
+  if [ -f /home/kodi/.xsession ] ; then
+    rm /home/kodi/.xsession
   fi
-  if [ -f /tmp/noRestartXBMC ] ; then
-    rm /tmp/noRestartXBMC
+  if [ -f /tmp/noRestartKODI ] ; then
+    rm /tmp/noRestartKODI
   fi
 end script
 
 script
-  exec /usr/bin/runXBMC
+  exec /usr/bin/runKODI
 end script
 
 post-start script
@@ -28,5 +28,5 @@ post-start script
 end script
 
 pre-stop script
-  touch /tmp/noRestartXBMC
+  touch /tmp/noRestartKODI
 end script
