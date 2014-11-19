@@ -37,7 +37,7 @@ AUTO_MOUNT_RULES_FILE="/etc/udev/rules.d/media-by-label-auto-mount.rules"
 SYSCTL_CONF_FILE="/etc/sysctl.conf"
 RSYSLOG_FILE="/etc/init/rsyslog.conf"
 POWERMANAGEMENT_DIR="/etc/polkit-1/localauthority/50-local.d/"
-DOWNLOAD_URL="https://github.com/Albinoman887/kodi-ubuntu-minimal/raw/master/12.10/download/"
+DOWNLOAD_URL="https://github.com/jknight2014/kodi-ubuntu-minimal/raw/master/12.10/download/"
 KODI_PPA="ppa:team-xbmc/ppa"
 KODI_PPA_UNSTABLE="ppa:team-xbmc/unstable"
 HTS_TVHEADEND_PPA="ppa:jabbors/hts-stable"
@@ -305,8 +305,8 @@ function addXbmcPpa()
         --radiolist "Which KODI PPA would you like to use? The official stable PPA will install the current release version of KODI or you can use the unstable PPA which will install the current testing (Alpha/Beta/RC) version of KODI. If unsure use the default Official PPA." 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Official PPA - Install the release version." on
-             2 "Unstable PPA - Install the Alpha/Beta/RC version." off)
+    options=(1 "Official PPA - Install the release version. (xbmc)" off
+             2 "Unstable PPA - Install the Alpha/Beta/RC version. (Kodi)" on)
          
     choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
@@ -832,7 +832,7 @@ function selectXbmcTweaks()
         15 $DIALOG_WIDTH 6)
         
    options=(1 "Enable temperature monitoring (confirm with ENTER)" on
-            2 "Install Addon Repositories Installer addon" off
+            2 "Install Addon Repositories Installer addon" on
             3 "Apply improved Pulse-Eight Motorola NYXboard keymap" off)
             
     choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -896,7 +896,7 @@ function selectAdditionalPackages()
         --checklist "Plese select to install:" 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Lirc (IR remote support)" off
+    options=(1 "Lirc (IR remote support)" on
             2 "Hts tvheadend (live TV backend)" off
             3 "Oscam (live HDTV decryption tool)" off
             4 "Automatic upgrades (every 4 hours)" off
