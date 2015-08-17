@@ -305,8 +305,8 @@ function addXbmcPpa()
         --radiolist "Which KODI PPA would you like to use? The official stable PPA will install the current release version of KODI or you can use the unstable PPA which will install the current testing (Alpha/Beta/RC) version of KODI. If unsure use the default Official PPA." 
         15 $DIALOG_WIDTH 6)
         
-    options=(1 "Official PPA - Install the release version. (xbmc)" off
-             2 "Unstable PPA - Install the Alpha/Beta/RC version. (Kodi)" on)
+    options=(1 "Official PPA - Install the release version. (xbmc)" on
+             2 "Unstable PPA - Install the Alpha/Beta/RC version. (Kodi)" off)
          
     choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
 
