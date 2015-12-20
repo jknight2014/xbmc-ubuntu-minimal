@@ -191,6 +191,19 @@ function isPackageInstalled()
     fi
 }
 
+function isModuleLoaded()
+{
+    MODULE=$@
+	if [ `lsmod | grep -o ^$MODULE` ] 
+	then 
+		echo 1
+	else 
+		echo 0
+	fi 
+}
+
+
+
 function aptInstall()
 {
     PACKAGE=$@
@@ -611,10 +624,14 @@ function installVideoDriver()
             else
             VIDEO_DRIVER="fglrx"
             fi
-    elif [[ $GFX_CARD == INTEL ]]; then
+    elif [[ $GFX_CARD == INTEL ]] || [[ $GFX_CARD == VMWARE ]]; then
         VIDEO_DRIVER="i965-va-driver"
-    elif [[ $GFX_CARD == VMWARE ]]; then
-        VIDEO_DRIVER="i965-va-driver"
+    elif [[ $GFX_CARD == INNOTEK ]]; then
+        if [ "$(isModuleLoaded vboxvideo)" == "0" ]; then
+            showDialog "vboxvideo module not loaded, install guest additions to improve video performance"
+            trap control_c SIGINT
+        fi
+        VIDEO_DRIVER=""
     else
         cleanUp
         clear
