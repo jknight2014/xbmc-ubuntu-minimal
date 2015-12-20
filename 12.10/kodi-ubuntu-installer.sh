@@ -628,8 +628,8 @@ function installVideoDriver()
         VIDEO_DRIVER="i965-va-driver"
     elif [[ $GFX_CARD == INNOTEK ]]; then
         if [ "$(isModuleLoaded vboxvideo)" == "0" ]; then
-            showDialog "vboxvideo module not loaded, install guest additions to inprove video performance"
-			trap control_c SIGINT
+            showDialog "vboxvideo module not loaded, install guest additions to improve video performance"
+            trap control_c SIGINT
         fi
         VIDEO_DRIVER=""
     else
